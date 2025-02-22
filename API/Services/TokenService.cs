@@ -23,11 +23,11 @@ namespace DatingApp.API.Services
 
             var claims = new List<Claim>
             {
-                new(ClaimTypes.NameIdentifier,user.UserName);
-            }
+                new(ClaimTypes.NameIdentifier,user.UserName)
+            };
 
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

@@ -3,14 +3,16 @@ using System.Security.Cryptography;
 using System.Text;
 using API.Data;
 using API.Entities;
+using DatingApp.API.Entities;
+using DatingApp.API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
-public class AccountController(DataContext context) : BaseApiController
+public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
 {
     [HttpPost("register")] // account/register
-    public async Task<ActionResult<AppUser>> Register(ResgisterDto resgisterDto)
+    public async Task<ActionResult<UserDto>> Register(ResgisterDto resgisterDto)
     {
         if (await UserExists(resgisterDto.username))
         {
@@ -27,11 +29,15 @@ public class AccountController(DataContext context) : BaseApiController
         };
         context.Users.Add(user);
         await context.SaveChangesAsync();
-        return user;
+        return new UserDto
+        {
+            username = resgisterDto.username,
+            token = tokenService.CreateToken(user)
+        };
     }
 
     [HttpPost("login")] // account/login
-    public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+    public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
         var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.username.ToLower());
 
@@ -45,7 +51,11 @@ public class AccountController(DataContext context) : BaseApiController
         {
             if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
         }
-        return user;
+        return new UserDto
+        {
+            username = loginDto.username,
+            token = tokenService.CreateToken(user)
+        };
     }
 
     private async Task<bool> UserExists(string username)
