@@ -1,22 +1,51 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">DatingApp</a>
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link">Matches</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">Lists</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">Messages</a>
-          </li>
-        </ul>
-        <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" role="search">
-          <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="username">
-          <input name="password" [(ngModel)]="model.password" class="form-control me-2" type="password" placeholder="password">
-          <button class="btn btn-outline-success" type="submit">Login</button>
-        </form>
-      </div>
+  <div class="container">
+    <a class="navbar-brand" href="#">DatingApp</a>
 
-  </nav>
+    <!-- user loggedIn then show the links -->
+    @if (accountservice.currentUser()) {
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <li class="nav-item">
+        <a class="btn btn-primary nav-link">Matches</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-primary nav-link">Lists</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-primary nav-link">Messages</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-danger nav-link" (click)="logout()">Logout</a>
+      </li>
+    </ul>
+    }
+
+    <!-- user loggedin show the dropdown -->
+    @if (accountservice.currentUser()) {
+    <div class="dropdown" dropdown>
+      <a class="dropdown-toggle text-light" dropdownToggle>
+        Welcome User
+      </a>
+
+      <ul class="dropdown-menu" *dropdownMenu>
+        <li><a class="dropdown-item">Edit Profile</a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" (click)="logout()">Log out</a></li>
+      </ul>
+    </div>
+
+    }
+
+    <!-- if user is not loggedin then show the form -->
+    @if (!accountservice.currentUser()) {
+    <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex" role="search">
+      <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="username" />
+      <input name="password" [(ngModel)]="model.password" class="form-control me-2" type="password"
+        placeholder="password" />
+      <button class="btn btn-outline-success" type="submit">Login</button>
+    </form>
+    }
+  </div>
+</nav>

@@ -1,0 +1,9 @@
+.dropdown-toggle
+{
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Change cursor to pointer on hover for dropdown items */
+.dropdown-menu li a.dropdown-item:hover {
+    cursor: pointer;
+  }
