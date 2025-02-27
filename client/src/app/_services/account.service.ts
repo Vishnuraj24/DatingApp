@@ -25,6 +25,20 @@ export class AccountService {
       )
   }
 
+  register(model:any) {
+    console.log('entered into the register in the accountserivce.ts ');
+    return this.http.post<User>(this.baseUrl + 'account/register', model)
+      .pipe(
+        map(user => {
+          if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+            this.currentUser.set(user);
+          }
+          return user;
+        })
+      )
+  }
+
   logout() {
     console.log('entered into the logout in the logout in the accountserivce.ts component and the user is removed in local storage');
     localStorage.removeItem('user');

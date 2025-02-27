@@ -15,6 +15,7 @@
 @else {
 <!-- <app-register [usersFromHomeomponent]="users"></app-register> -->
 <!-- input in [] and output ()-->
-<app-register [usersFromHomeComponent]="users" (cancelRegister)="cancelRegisterMode($event)"></app-register>
+<!-- //<app-register [usersFromHomeComponent]="users" (cancelRegister)="cancelRegisterMode($event)"></app-register> -->
+<app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
 
 }
