@@ -25,7 +25,13 @@ namespace DatingApp.API.Extensions
             services.AddScoped<ITokenService, TokenService>(); //built in add isnot present for tokens so we are adding the scoped
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddCors();
-
+            ///<summary>
+            /// By passing AppDomain.CurrentDomain.GetAssemblies(), 
+            /// you tell AutoMapper to scan all assemblies in the 
+            /// current application domain for classes that inherit
+            ///  from Profile and automatically register them.
+            ///</summary>
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             return services;
         }
     }
