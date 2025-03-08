@@ -15,7 +15,7 @@ public class AppUser
     public DateTime LastActive { get; set; } = DateTime.UtcNow;
     public string? Introduction { get; set; }
     public string? Interests { get; set; }
-    public string? LokkingFor { get; set; }
+    public string? LookingFor { get; set; }
     public required string City { get; set; }
     public required string Country { get; set; }
     public List<Photo> Photos { get; set; } = [];
