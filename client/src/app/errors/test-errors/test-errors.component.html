@@ -4,4 +4,17 @@
     <button class="btn btn-outline-primary me-4" (click)="get500Error()">Test500Error</button>
     <button class="btn btn-outline-primary me-4" (click)="get401Error()">Test401Error</button>
     <button class="btn btn-outline-primary me-4" (click)="get400ValidationError()">Test400ValidationError</button>
+
+    @if(validationErrors.length > 0){
+    <div class="row mt-5">
+        <ul class="text-danger">
+            @for (error of validationErrors; track $index) {
+            <li>
+                {{error}}
+            </li>
+            }
+        </ul>
+    </div>
+    }
+
 </div>
