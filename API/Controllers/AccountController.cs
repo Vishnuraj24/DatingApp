@@ -18,22 +18,25 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         {
             return BadRequest("Username already exists");
         }
-        //encrypting the password
-        using var hmac = new HMACSHA512(); //dotnet garbase will automatically dispose this if use using
 
-        var user = new AppUser
-        {
-            UserName = resgisterDto.username.ToLower(),
-            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(resgisterDto.password)),
-            PasswordSalt = hmac.Key
-        };
-        context.Users.Add(user);
-        await context.SaveChangesAsync();
-        return new UserDto
-        {
-            username = resgisterDto.username,
-            token = tokenService.CreateToken(user)
-        };
+        return Ok();
+
+        //encrypting the password
+        // using var hmac = new HMACSHA512(); //dotnet garbase will automatically dispose this if use using
+
+        // var user = new AppUser
+        // {
+        //     UserName = resgisterDto.username.ToLower(),
+        //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(resgisterDto.password)),
+        //     PasswordSalt = hmac.Key
+        // };
+        // context.Users.Add(user);
+        // await context.SaveChangesAsync();
+        // return new UserDto
+        // {
+        //     username = resgisterDto.username,
+        //     token = tokenService.CreateToken(user)
+        // };
     }
 
     [HttpPost("login")] // account/login
